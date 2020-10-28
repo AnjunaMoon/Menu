@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            //$(function () {
+            //    $("#menu").menu();
+            //});
+            App.getMenu();
+
+
+
+        });
+
+        var App = {
+            itemTemplate: "<li ><div>Toys (n/a)</div></li>",
+            getMenu: function () {
+                $.ajax({
+                    url: "http://localhost:24749/api/menu"
+                }).then(function (data) {
+                    var getMenuItem = function (itemData) {
+                        var item = $("<li>")
+                            .append(
+                                $("<a>", {
+                                    href: '#' + itemData.url,
+                                    html: itemData.label,
+                                    target: '_blank'
+                                }));
+                        if (itemData.items) {
+                            var subList = $("<ul>");
+                            $.each(itemData.items, function () {
+                                subList.append(getMenuItem(this));
+                            });
+                            item.append(subList);
+                        }
+                        return item;
+                    };
+
+                    var $menu = $("#menu");
+                    $.each(data.items, function () {
+                        $menu.append(
+                            getMenuItem(this)
+                        );
+                    });
+                    $menu.menu();
+                });
+            }
+        }
+
+
+    </script>
+    <style>
+        .ui-menu {
+            width: 250px;
+        }
+        input {
+            margin-bottom:5px;
+        }
+    </style>
+</head>
+<body>
+    Index | <a href="admin2.html">Admin</a>
+    <hr />
+    <ul id="menu">
+     
+    </ul>
+</body>
+</html>

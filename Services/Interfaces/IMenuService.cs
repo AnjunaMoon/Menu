@@ -6,14 +6,23 @@ using System.Threading.Tasks;
 
 namespace Menu.Services.Interfaces
 {
-    interface IMenuService
+    public interface IMenuService
     {
         /// <summary>
-        /// Adds a subitem to an existing MenuItem
-        /// or adds at top-level item (parentItem == null)
+        /// Add menuItem to existing item
         /// </summary>
-        /// <param name="parentItem"></param>
-        /// <param name="childItem"></param>
-        void AddItem(MenuItem parentItem, MenuItem childItem);
+        /// <param name="parentId"></param>
+        /// <param name="childLabel"></param>
+        /// <param name="childUrl"></param>
+        /// <returns>Id of new child item</returns>
+        Task<string> AddItem(MenuItem newItem);
+
+        /// <summary>
+        /// Get full menu, where first menu item is the root
+        /// </summary>
+        /// <returns>The tree of menu-items</returns>
+        Task<MenuItem> GetMenu();
+
+        void DeleteAll();
     }
 }
