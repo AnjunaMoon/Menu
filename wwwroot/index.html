@@ -9,13 +9,7 @@
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function () {
-            //$(function () {
-            //    $("#menu").menu();
-            //});
             App.getMenu();
-
-
-
         });
 
         var App = {
@@ -28,7 +22,7 @@
                         var item = $("<li>")
                             .append(
                                 $("<a>", {
-                                    href: '#' + itemData.url,
+                                    href: itemData.url,
                                     html: itemData.label,
                                     target: '_blank'
                                 }));
